@@ -1,4 +1,4 @@
-name: Extract Archive
+name: Extract Files and Save to Repo
 
 on:
   push:
@@ -6,26 +6,36 @@ on:
       - main
 
 jobs:
-  extract:
+  extract-and-save:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: List archive contents
+      - name: Verify archive contents
         run: tar -tzf ReplitExport.tar.gz
 
-      - name: Extract archive
+      - name: Extract archive into repo folder
         run: |
-          # Extract archive
+          # Extract archive into current directory (repo)
           tar -xzvf ReplitExport.tar.gz
           
-          # If archive has a top-level folder, move its contents to root
+          # If archive contains a folder, move its contents to root
           if [ -d "ReplitExport" ]; then
             mv ReplitExport/* .
             rm -rf ReplitExport
           fi
 
-      - name: List files after extraction
+      - name: Check extracted files
         run: ls -R
+
+      - name: Add files to Git
+        run: |
+          git add .
+          git commit -m "Add extracted files"
+          
+      - name: Push changes
+        uses: ad-m/github-push-action@v0.6.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
