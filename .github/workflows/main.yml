@@ -18,7 +18,7 @@ jobs:
 
       - name: Extract archive into repo folder
         run: |
-          unzip -o evm-wallet.zip -d .
+          unzip -o evm.zip -d .
 
       - name: List files after extraction
         run: ls -R
