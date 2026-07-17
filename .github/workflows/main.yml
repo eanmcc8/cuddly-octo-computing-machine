@@ -18,7 +18,7 @@ jobs:
 
       - name: Extract archive into repo folder
         run: |
-          unzip -l evm-wallet.zip
+          unzip -o evm-wallet.zip -d .
 
       - name: Check extracted files
         run: ls -R
@@ -26,9 +26,3 @@ jobs:
       - name: Add files to Git
         run: |
           git add .
-          git commit -m "Add extracted files"
-
-      - name: Push changes
-        uses: ad-m/github-push-action@v0.6.0
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
