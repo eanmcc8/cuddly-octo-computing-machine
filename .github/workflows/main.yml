@@ -3,7 +3,7 @@ name: Extract Archive
 on:
   push:
     branches:
-      - main  # Replace with your branch if different
+      - main
 
 jobs:
   extract:
@@ -13,9 +13,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Extract archive and replace files
+      - name: Verify archive contents
+        run: tar -tzf ReplitExport.tar.gz || unzip -l ReplitExport.zip
+
+      - name: Extract archive
         run: |
-          # Extract the archive, overwriting files
+          # Remove existing files
+          git rm -rf . || true
+          
+          # Extract archive (adjust if zip)
           tar -xzvf ReplitExport.tar.gz -C .
 
-      # No commit or push steps
+      - name: List files after extraction
+        run: |
+          ls -R
