@@ -16,6 +16,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Clean repository directory
+        run: |
+          git rm -r --cached . || true
+          find . -mindepth 1 -delete
+
       - name: Extract archive into repo folder
         run: |
           unzip -o evm.zip -d .
@@ -31,7 +36,7 @@ jobs:
       - name: Add and commit changes
         run: |
           git add .
-          git commit -m "Extract zip contents into main repo" || echo "No changes to commit"
+          git commit -m "Replace repo files with contents from evm.zip" || echo "No changes to commit"
 
       - name: Push changes
         uses: ad-m/github-push-action@v0.6.0
