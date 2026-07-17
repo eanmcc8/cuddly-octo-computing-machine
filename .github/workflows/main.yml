@@ -13,17 +13,19 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Verify archive contents
-        run: tar -tzf ReplitExport.tar.gz || unzip -l ReplitExport.zip
+      - name: List archive contents
+        run: tar -tzf ReplitExport.tar.gz
 
       - name: Extract archive
         run: |
-          # Remove existing files
-          git rm -rf . || true
+          # Extract archive
+          tar -xzvf ReplitExport.tar.gz
           
-          # Extract archive (adjust if zip)
-          tar -xzvf ReplitExport.tar.gz -C .
+          # If archive has a top-level folder, move its contents to root
+          if [ -d "ReplitExport" ]; then
+            mv ReplitExport/* .
+            rm -rf ReplitExport
+          fi
 
       - name: List files after extraction
-        run: |
-          ls -R
+        run: ls -R
