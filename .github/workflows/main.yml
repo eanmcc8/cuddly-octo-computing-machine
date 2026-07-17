@@ -18,11 +18,10 @@ jobs:
 
       - name: Extract archive into repo folder
         run: |
-          unzip -o evm-wallet.zip -d .
-
+          unzip -o evm-wallet.zip -d 
       - name: Check extracted files
         run: ls -R
 
       - name: Add files to Git
         run: |
-          git add .
+          git add 
