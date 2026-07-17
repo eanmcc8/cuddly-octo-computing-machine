@@ -12,10 +12,7 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-
-      - name: Verify archive contents
-        run: tar -tzf ReplitExport.tar.gz
-
+        
       - name: Extract archive into repo folder
         run: |
           # Extract archive into current directory (repo)
