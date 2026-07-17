@@ -7,7 +7,6 @@ on:
 
 permissions:
   contents: write  # Grant write permission to push changes
-  id-token: write
 
 jobs:
   unzip-and-commit:
