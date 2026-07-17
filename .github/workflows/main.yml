@@ -1,38 +1,21 @@
-name: Unzip and Add Files to Main Repo
+name: Extract Archive
 
 on:
   push:
     branches:
-      - main  # or your target branch
-
-permissions:
-  contents: write  # allows pushing changes
-  id-token: write
+      - main  # Replace with your branch if different
 
 jobs:
-  extract-and-commit:
+  extract:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Extract the tar.gz file
+      - name: Extract archive and replace files
         run: |
-          # Extract all files into the current directory (repo root)
+          # Extract the archive, overwriting files
           tar -xzvf ReplitExport.tar.gz -C .
 
-      - name: Add all extracted files
-        run: |
-          git add .
-
-      - name: Commit changes
-        run: |
-          git config --global user.name "github-actions"
-          git config --global user.email "actions@github.com"
-          git commit -m "Add files extracted from ReplitExport.tar.gz" || echo "No changes to commit"
-
-      - name: Push changes
-        uses: ad-m/github-push-action@v0.6.0
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+      # No commit or push steps
