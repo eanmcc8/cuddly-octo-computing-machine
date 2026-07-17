@@ -1,10 +1,8 @@
 name: Unzip and Commit
 
 on:
-  push:
-    branches:
-      - main  # or your target branch
-
+  push
+  
 permissions:
   contents: write  # Grant write permission to push changes
 
