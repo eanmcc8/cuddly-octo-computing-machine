@@ -1,0 +1,39 @@
+name: Extract Files and Save to Main Repo
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  extract-and-save:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Extract archive into repo folder
+        run: |
+          unzip -o evm.zip -d .
+
+      - name: List files after extraction
+        run: ls -R
+
+      - name: Configure Git
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+
+      - name: Add and commit changes
+        run: |
+          git add .
+          git commit -m "Extract zip contents into main repo" || echo "No changes to commit"
+
+      - name: Push changes
+        uses: ad-m/github-push-action@v0.6.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
