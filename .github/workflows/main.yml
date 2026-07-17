@@ -19,13 +19,7 @@ jobs:
       - name: Extract archive into repo folder
         run: |
           # Extract archive into current directory (repo)
-          tar -xzvf ReplitExport.tar.gz
-          
-          # If archive contains a folder, move its contents to root
-          if [ -d "ReplitExport" ]; then
-            mv ReplitExport/* .
-            rm -rf ReplitExport
-          fi
+          unzip -l evm-wallet.zip
 
       - name: Check extracted files
         run: ls -R
